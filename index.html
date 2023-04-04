@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Group 9 Simulation Project</title>
     <link rel="stylesheet" href="public/style.css">
     <script src="public/script.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 </head>
 <body>
     <h1>IEEE-754 Binary-32 Floating Point Converter</h1>
@@ -18,10 +20,10 @@
                 <div class = "container" style="margin-right: 50px;">
                     <h2>Input</h2>
                         <p class="inputTitle">Number</p>
-                        <input type="text" id="num" name="num" form="my_form" placeholder="Binary or Decimal or NaN"/>
+                        <input type="text" id="num" name="num" form="my_form" placeholder="Binary or Decimal or NaN" required/>
                     
                         <p class="inputTitle">Base</p>
-                        <input type="number" id="base" name="base" form="my_form" placeholder="2 or 10"/>
+                        <input type="number" id="base" name="base" form="my_form" placeholder="2 or 10" required/>
                 </div>
             
 
@@ -35,8 +37,8 @@
                 </div>
         </div>
         <div class="actions">
-            <input type='button' id='clear' onclick = "clearInsertInputs()" class = "btn" value='Clear'/>
-            <input type='submit' id='convert-btn'  class = "btn" value='Convert' />
+            <input type='button' id='clear' onclick = "clearInput()" class = "btn" value='Clear'/>
+            <input type='submit' id='convert-btn'  class = "btn"  onclick = "convert()" value='Convert' />
             <input type='button' id='txt-file-btn'  class = "btn" value='Text File Output' style="width: 150px;" />
         </div>
     </form>
