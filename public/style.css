@@ -8,14 +8,14 @@
 .container {
     border:solid;
     border-color: black;
-    height:200px;
+    height:280px;
     width: 450px;
     padding-left: 25px;
 }
 
 .inputTable{
     width: 1000px;
-    height: 250px;
+    height: 330px;
     margin:auto;
     margin-top: 30px;
     border-radius: 20px;
@@ -27,7 +27,7 @@
 }
 
 
-input[type="number"],textarea {
+input[type="text"], input[type="number"],textarea {
     height: 35px;
     width: 400px;
     border-radius: 5px;
