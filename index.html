@@ -9,6 +9,34 @@
     <script src="public/script.js"></script>
 </head>
 <body>
-    <h1>CSARCH2 Simulation Project</h1>
+    <h1>IEEE-754 Binary-32 Floating Point Converter</h1>
+    <p>Converter to binary-32 floating point into binary and hexadecimal number equivalent.</p>
+    <p>Enter the 32-bit binary or decimal representation of a floating-point number here, then click= Convert</p>
+    <form method="GET" id="my_form"></form>
+        <div class = "inputTable">
+            
+                <div class = "container" style="margin-right: 50px;">
+                        <p class="inputTitle">Input</p>
+                        <input type="number" id="num" name="num" form="my_form" placeholder="Binary or Decimal Number"/>
+                    
+                        <p class="inputTitle">Base</p>
+                        <input type="number" id="base" name="base" form="my_form" placeholder="2 or 10"/>
+                </div>
+            
+
+                <div class = "container">
+                        <p class="inputTitle">Binary Number</p>
+                        <textarea readonly id="binNum"></textarea>
+
+                        <p class="inputTitle">Hexadecimal Number</p>
+                        <textarea readonly id="hexNum"></textarea>
+                </div>
+        </div>
+        <div class="actions">
+            <input type='button' id='clear' onclick = "clearInsertInputs()" class = "btn" value='Clear'/>
+            <input type='submit' id='convert-btn'  class = "btn" value='Convert' />
+            <input type='button' id='txt-file-btn'  class = "btn" value='Text File Output' style="width: 150px;" />
+        </div>
+    </form>
 </body>
 </html>

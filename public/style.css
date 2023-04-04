@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans&display=swap');
+
+* {
+    font-family: 'Work Sans', sans-serif;
+}
+
+
+.container {
+    border:solid;
+    border-color: black;
+    height:200px;
+    width: 450px;
+    padding-left: 25px;
+}
+
+.inputTable{
+    width: 1000px;
+    height: 250px;
+    margin:auto;
+    margin-top: 30px;
+    border-radius: 20px;
+    display: flex;
+}
+
+.inputTitle{
+    margin-bottom: 10px;
+}
+
+
+input[type="number"],textarea {
+    height: 35px;
+    width: 400px;
+    border-radius: 5px;
+    padding-left: 15px;
+    font-size: 14px;
+}
+
+.actions{
+    display: flex;
+    width: 600px;
+    margin: auto;
+}
+
+input[type="submit"],input[type="button"] {
+    width: 150px;
+    height: 30px;
+}
+.btn{
+    color: white;
+    background-color: green;
+}
+#convert-btn, #clear {
+    margin-right: 70px;
+}
+#clear {
+    background-color: red;
+}
