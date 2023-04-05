@@ -121,23 +121,12 @@ function convert(){
     var integer = parseFloat(splitNum[0]);
     var dec  = parseFloat("0." + splitNum[1]);
 
-    /*
-    dec = parseFloat(dec) * parseFloat(Math.pow(10.0, exponent));
-    if(dec == 0){dec = ".0";}
-
-    input = parseFloat(integer.toString() + dec.toString());
-    */
-   input = parseFloat(integer+dec) * parseFloat(Math.pow(10.0, exponent))
+    input = parseFloat(integer+dec) * parseFloat(Math.pow(10.0, exponent))
     
     splitNum = input.toString().split('.');
     integer = parseFloat(splitNum[0]);
     dec  = parseFloat("0." + splitNum[1]);
-
-    if(dec == null)
-    {dec = "0";}
-    console.log('input: '+ input);
-    
-    
+        
     if(input == "NaN"){
         binNum.innerHTML = '0 11111111 11111111111111111111111 (qNaN)';
     }
