@@ -1,3 +1,5 @@
+const parse = require("nodemon/lib/cli/parse");
+
 function clearInput(){
     document.getElementById("num").value="";
     document.getElementById("base").value="";
@@ -7,18 +9,7 @@ function clearInput(){
 }
 
 function integer_to_binary(num){
-    let binary = "";
-    while (num > 0) {
-        // if modulo of number with 2 is ‘1’, append 1 in front of binary string. Otherwise append 0.
-        if (num % 2 == 1) {
-           binary = "1" + binary;
-        } else {
-           binary = "0" + binary;
-        }
-        // divide number by 2.
-        num = Math.floor(num / 2);
-     }
-    return binary;
+    return (num >>> 0).toString(2)
 }
 
 //accepts float
@@ -34,30 +25,22 @@ function decimal_to_binary(num){
     return dec;
 }
 
-
-function normalize(integer, decimal, exponent){
+function normalize_base10(integer, decimal, exponent){
     let binary = "";
     var count = 0;
+    
+    if(decimal == 0){exponent = 0;}
 
     if(integer.toString().length == 1 && integer == "1")
     {
         binary = integer + "." + decimal;
     }
     else if (integer.toString().length > 1) { //shift decimal point to left
-        //var temp = parseInt(integer, 2);    
-        /*
-        while (temp != 1) {
-            temp = temp  >> 1;
-            count += 1;
-            var lastChar = temp.toString(2).slice(-1);
-            decimal = decimal.padStart(decimal.toString().length + 1, lastChar);
-        }*/
         while (integer != "1") {
             temp = integer.slice(-1);
             count += 1;
             decimal = decimal.padStart(decimal.toString().length + 1, temp);
             integer = integer.slice(0, -1);
-            console.log("new dec: " + decimal);
         }
         binary = "1" + "." + decimal;
         exponent = exponent + count;
@@ -72,7 +55,7 @@ function normalize(integer, decimal, exponent){
         binary = "1" + "." + temp;
         exponent = exponent - count;
     }
-
+    
     return [binary, exponent];
 }
 
@@ -101,9 +84,18 @@ function convert(){
     var base = document.getElementById("base").value;
     var exponent = document.getElementById("exponent").value;
     var sign_bit = get_sign(input);
+
     var splitNum = input.toString().split('.');
-    var integer = splitNum[0];
-    var dec  = "0." + splitNum[1];
+
+    var integer = parseFloat(splitNum[0]);
+    var dec  = parseFloat("0." + splitNum[1]);
+
+    input = integer + dec;
+    input = parseFloat(input) * parseFloat(Math.pow(10, exponent));
+    
+    splitNum = input.toString().split('.');
+    integer = parseFloat(splitNum[0]);
+    dec  = parseFloat("0." + splitNum[1]);
 
     if(dec == null)
     {dec = "0";}
@@ -116,19 +108,19 @@ function convert(){
         binNum.innerHTML = '00000000000000000000000000000000';
     }
     else if (base == "10"){
+       
        integer = integer_to_binary(parseInt(integer));
        dec = decimal_to_binary(parseFloat(dec));
 
        console.log(dec);
 
-       normalized_results = normalize(integer, dec, parseInt(exponent));
+       normalized_results = normalize_base10(integer, dec, parseInt(exponent));
        var binary = normalized_results[0];
        exponent = 127 + normalized_results[1];
        var expoRep = (exponent >>> 0).toString(2);
 
        var answer = sign_bit + " " + expoRep + " " + getFullMantissa(binary.split('.')[1]);
        binNum.innerHTML = answer;
-
     }
     else {
         binNum.innerHTML = '1';
