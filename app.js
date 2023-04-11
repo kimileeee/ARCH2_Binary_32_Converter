@@ -8,11 +8,11 @@ router.get('/', function (req, res) {
     res.sendFile(path.join(__dirname + '/index.html'))
 });
 
-const port = 8080;
+const port = 5050;
 
-app.use(express.static(__dirname + '/public'));
+app.use('/public', express.static(__dirname + '/public'));
 app.use('/', router)
 
 app.listen(port, () => {
-    console.log('Listening on port ${port}')
+    console.log('Listening on port ' + port)
 })

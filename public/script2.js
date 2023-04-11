@@ -70,7 +70,7 @@ function clearInput(){
 }
 
 function integer_to_binary(num){
-    return (num >>> 0).toString(2)
+    return (num >>> 0).toString(2);
 }
 
 //accepts float
@@ -226,6 +226,7 @@ function getFullExponent(num){
 }
 
 function convert(){
+    console.log("")
     var input = document.getElementById("num").value;
     var base = document.getElementById("base").value;
     var exponent = document.getElementById("exponent").value;
@@ -254,54 +255,127 @@ function convert(){
     }
     else if (input == 0)
     {
-        binNum.innerHTML = '00000000000000000000000000000000';
+        binNum.innerHTML = '0 00000000 00000000000000000000000';
     }
     else if (base == "2") {
-       // integer = parseInt(integer);
-        //dec = parseFloat(dec);
+        // integer = parseInt(integer);
+        // dec = parseFloat(dec);
         var dec  = parseFloat("0." + splitNum[1]);
 
         console.log(integer);
         console.log(dec);
-
         normalized_results = normalize_base2(integer.toString(), dec.toString(), parseInt(exponent));
-        var binary = normalized_results[0];
-        exponent = 127 + normalized_results[1];
-        var expoRep = integer_to_binary(parseInt(exponent))
+        binary = normalized_results[0].split(".");
+        console.log("to normalize: " + normalized_results[0] + ", " + normalized_results[1]);
+        if(checkSpecial(sign_bit, normalized_results[1], binary[0], "0."+binary[1], 1) == false) {
+            var binary = normalized_results[0];
+            exponent = 127 + normalized_results[1];
+            var expoRep = integer_to_binary(parseInt(exponent))
 
-        //console.log('result: ' + binary.toString().split('.')[1]);
-        console.log('result: '+ binary);
+            //console.log('result: ' + binary.toString().split('.')[1]);
+            console.log('result: '+ binary);
 
-        var answer_bin = sign_bit + " " + getFullExponent(expoRep) + " " + getFullMantissa(binary.split('.')[1]);
-        //var answer_hex = binary_to_hex(answer_bin);
-        var answer_hex = binary_to_hex(sign_bit + getFullExponent(expoRep) + getFullMantissa(binary.split('.')[1]));
+            var answer_bin = sign_bit + " " + getFullExponent(expoRep) + " " + getFullMantissa(binary.split('.')[1]);
+            //var answer_hex = binary_to_hex(answer_bin);
+            var answer_hex = binary_to_hex(sign_bit + getFullExponent(expoRep) + getFullMantissa(binary.split('.')[1]));
 
-        binNum.innerHTML = answer_bin;
-        hexNum.innerHTML = answer_hex;
+            binNum.innerHTML = answer_bin;
+            hexNum.innerHTML = answer_hex;
+        }
     }
     else if (base == "10"){
-       input = parseFloat(integer+dec) * parseFloat(Math.pow(10.0, exponent))
+        input = parseFloat(integer+dec) * parseFloat(Math.pow(10.0, exponent));
+        console.log(input);
+        splitNum = input.toString().split('.');
+        integer = parseFloat(splitNum[0]);
+        dec  = parseFloat("0." + splitNum[1]);
 
-       splitNum = input.toString().split('.');
-       integer = parseFloat(splitNum[0]);
-       dec  = parseFloat("0." + splitNum[1]);
+        integer = integer_to_binary(parseInt(integer));
+        dec = decimal_to_binary(parseFloat(dec));
+        console.log(integer+"."+dec+", "+exponent);
+        
+        normalized_results = normalize_base10(integer, dec, parseInt(exponent));
+        binary = normalized_results[0].split(".");
+        console.log("to normalize: " + normalized_results[0] + ", " + normalized_results[1]);
+        
+        var binary = normalized_results[0];
+            
+        if(checkSpecial(sign_bit, exponent, binary[0], "0."+binary[1], 0) == false) {
+            exponent = 127 + normalized_results[1];
+            var expoRep = integer_to_binary(parseInt(exponent))
 
-       integer = integer_to_binary(parseInt(integer));
-       dec = decimal_to_binary(parseFloat(dec));
-
-       normalized_results = normalize_base10(integer, dec, parseInt(exponent));
-       var binary = normalized_results[0];
-       exponent = 127 + normalized_results[1];
-       var expoRep = integer_to_binary(parseInt(exponent))
-
-       var answer_bin = sign_bit + " " + getFullExponent(expoRep) + " " + getFullMantissa(binary.split('.')[1]);
-       var answer_hex = binary_to_hex(sign_bit + getFullExponent(expoRep) + getFullMantissa(binary.split('.')[1]));
-       binNum.innerHTML = answer_bin;
-       hexNum.innerHTML = answer_hex;
+            var answer_bin = sign_bit + " " + getFullExponent(expoRep) + " " + getFullMantissa(binary.split('.')[1]);
+            var answer_hex = binary_to_hex(sign_bit + getFullExponent(expoRep) + getFullMantissa(binary.split('.')[1]));
+            binNum.innerHTML = answer_bin;
+            hexNum.innerHTML = answer_hex;
+        }
     }
     else {
         //just for placement
         binNum.innerHTML = '1';
+    }
+
+    function checkSpecial(sign_bit, exponent, integer, dec, isBase2) {
+        var exp_denorm = isBase2? -126: -38;
+        var exp_infi = isBase2? 127: 38;
+        if(exponent < exp_denorm) {       // denormalized
+            console.log("denormalized input found");
+            // peg exponent to -126 and denormalized the significand
+            // e' = 0
+            // significand is the denormalized significand
+            dec = dec.split(".")[1];
+            while (exponent != exp_denorm) {
+                if(integer == undefined || integer == ""){
+                    integer = "0";
+                }
+                temp = integer.slice(-1);
+                exponent++;
+                dec = temp + dec;
+                integer = integer.slice(0, -1);
+                console.log(integer + "." + dec);
+                console.log("exponent: "+ exponent)
+            }
+            binary = (integer? integer: "0") + "." + dec;
+            console.log("normalized: " + binary);
+
+            significand = "00000000000000000000000";
+            significand = dec + significand.slice(dec.length);
+
+            var answer_bin = sign_bit + " 00000000 " + significand;
+            var answer_hex = binary_to_hex(answer_bin.split(' ').join(''));
+
+            binNum.innerHTML = answer_bin;
+            hexNum.innerHTML = answer_hex;
+
+            console.log('denormalized: ' + answer_bin);
+            return true;
+        }
+        else if(exponent > exp_infi) {   // infinity
+            // e' = 11111111
+            // significand is 000 0000 0000 0000 0000 0000
+            var answer_bin = sign_bit + " 11111111 00000000000000000000000";
+            var answer_hex = binary_to_hex(answer_bin.split(' ').join(''));
+
+            binNum.innerHTML = answer_bin;
+            hexNum.innerHTML = answer_hex;
+
+            console.log('infinity');
+            return true;
+        }
+        console.log('normal');
+        return false;
+    }
+
+    function error_check() {
+        var input = document.getElementById("num").value;
+        var base = document.getElementById("base").value;
+        var exponent = document.getElementById("exponent").value;
+        var sign_bit = get_sign(input);
+        var splitNum = input.toString().split('.');
+
+        if (sign_bit == 1){
+            splitNum[0] =  splitNum[0].substring(1); //removes the '-' sign
+        }
     }
 
 }

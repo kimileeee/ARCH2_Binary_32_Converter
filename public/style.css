@@ -26,12 +26,19 @@
 }
 
 
-input[type="text"], input[type="number"],textarea {
+input[type="text"], input[type="number"],textarea, select {
     height: 35px;
     width: 400px;
     border-radius: 5px;
     padding-left: 15px;
     font-size: 14px;
+}
+
+select {
+    height: 45px;
+    width: 420px;
+    border: solid;
+    border-color: black;
 }
 
 .actions{
