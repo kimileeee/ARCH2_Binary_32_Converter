@@ -8,7 +8,7 @@ router.get('/', function (req, res) {
     res.sendFile(path.join(__dirname + '/index.html'))
 });
 
-const port = 5050;
+const port = 8080;
 
 app.use('/public', express.static(__dirname + '/public'));
 app.use('/', router)
