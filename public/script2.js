@@ -61,12 +61,12 @@ const parse = require("nodemon/lib/cli/parse");
       .join("");
   }
   
-function clearInput(){
+function clearAll(){
     document.getElementById("num").value="";
-    document.getElementById("base").value="";
+    document.getElementById("base").value = "default";
     document.getElementById("exponent").value="";
-    document.getElementById("binNum").value="";
-    document.getElementById("hexNum").value="";
+    binNum.innerHTML="";
+    hexNum.innerHTML="";
 }
 
 function clearOutput(){
@@ -384,10 +384,16 @@ function error_check() {
     var sign_bit = get_sign(input);
     var splitNum = input.toString().split('.');
 
-    if(input == "" || base == null || exponent == ""){
+    if(input == "" || exponent == ""){
         error_msg.innerHTML = "ERROR: Null input";
         clearOutput();
         return false;
+    }
+
+    if (base == "default") {
+        error_msg.innerHTML = "Error: No base selected";
+        clearOutput();
+        return false
     }
 
     if (sign_bit == 1){
@@ -406,7 +412,6 @@ function error_check() {
             clearOutput();
             return false;
         }
-            
     }
     else if (base == "10") {
         if (!/^[0-9]+$/.test(splitNum[0]) || (splitNum[1] != null && !/^[0-9]+$/.test(splitNum[1]))) {
@@ -418,4 +423,47 @@ function error_check() {
     document.getElementById("error").style.display = "none";
     error_msg.innerHTML = "";
     return true;
+}
+
+function saveToFile() {
+    var input = document.getElementById("num").value;
+    var base = document.getElementById("base").value;
+    var exponent = document.getElementById("exponent").value;
+
+    binOut = document.getElementById("binNum").value;
+    hexOut = document.getElementById("hexNum").value;
+
+    if (hexOut != "" && binOut != "") {
+        var data = "INPUT\nNumber: " + input + 
+                "\nBase: " + base + 
+                "\nExponent: " + exponent +
+                "\n\nOUTPUT\nBinary Number: " + binOut + 
+                "\nHexadecimal Number: " + hexOut + "\n";
+        
+        var blob = new Blob([data], {type: "text/plain"});
+
+        // Check if the browser is Internet Explorer
+        if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+            // Use the msSaveOrOpenBlob method to prompt a save dialog box in Internet Explorer
+            window.navigator.msSaveOrOpenBlob(blob, "myFile.txt");
+        } else {
+            // Use the createObjectURL and open methods to prompt a save dialog box in other browsers
+            var url = window.URL.createObjectURL(blob);
+            var a = document.createElement("a");
+            a.href = url;
+            a.download = "IEEE754_B32FP_Conversion.txt";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }
+
+        error_msg.innerHTML = "";
+        document.getElementById("error").style.display = "none";
+        clearAll();
+    }
+    else {
+        error_msg.innerHTML = "ERROR: Can't save to file, output is empty. Please Convert first.";
+        document.getElementById("error").style.display = "block";
+    }
 }

@@ -23,7 +23,8 @@
                         <input type="text" id="num" name="num" form="my_form" placeholder="Binary or Decimal or NaN"/>
                     
                         <p class="inputTitle">Base</p>
-                        <select name="base" id="base" form="my_form" placeholder="2 or 10">
+                        <select name="base" id="base" form="my_form">
+                            <option value="default">Select</option>
                             <option value="2">2</option>
                             <option value="10">10</option>
                         </select>
@@ -43,9 +44,9 @@
                         <textarea readonly id="hexNum"></textarea>
 
                         <div class="actions">
-                            <input type='button' id='clear' onclick = "clearInput()" class = "btn" value='Clear'/>
+                            <input type='button' id='clear' onclick = "clearAll()" class = "btn" value='Clear'/>
                             <input type='submit' id='convert-btn'  class = "btn"  onclick = "convert()" value='Convert' />
-                            <input type='button' id='txt-file-btn'  class = "btn" onclick = "" value='Text File Output' style="width: 150px;" />
+                            <input type='button' id='txt-file-btn'  class = "btn" onclick = "saveToFile()" value='Text File Output' style="width: 150px;" />
                         </div>
                 </div>
 
