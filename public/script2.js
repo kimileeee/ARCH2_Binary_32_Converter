@@ -151,6 +151,7 @@ function normalize_base2 (integer, decimal, exponent) {
     {
         console.log("here");
         decimal = decimal.split('.')[1];
+        if(decimal == undefined){decimal = "0"}
         binary = integer + "." + decimal;
         //binary = integer + decimal;
         console.log("binary: " + binary);
@@ -259,10 +260,7 @@ function convert(){
         console.log(dec);
         
         
-        if(input == "NaN"){
-            binNum.innerHTML = '0 11111111 11111111111111111111111 (qNaN)';
-        }
-        else if (input == 0)
+        if (input == 0)
         {
             binNum.innerHTML = '0 00000000 00000000000000000000000';
         }
@@ -390,6 +388,20 @@ function error_check() {
         return false;
     }
 
+    if(input == "qNaN")
+    {
+        binNum.innerHTML = "0 11111111 010 0000 0000 0000 0000 0000"
+        hexNum.innerHTML = "7FA00000"
+        return false;
+    }
+
+    if(input == "sNaN")
+    {
+        binNum.innerHTML = "0 11111111 100 0000 0000 0000 0000 0000"
+        hexNum.innerHTML = "7FC00000"
+        return false;
+    }
+
     if (base == "default") {
         error_msg.innerHTML = "Error: No base selected";
         clearOutput();
@@ -420,6 +432,7 @@ function error_check() {
             return false;
         }
     }
+    
     document.getElementById("error").style.display = "none";
     error_msg.innerHTML = "";
     return true;
