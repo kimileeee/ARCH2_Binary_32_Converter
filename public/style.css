@@ -22,7 +22,7 @@ body {
     border-color: black;
     height:350px;
     width: 48%;
-    margin:0.5%;
+    margin:auto;
     box-sizing: border-box;
     background-color: #f8f2e5;
     align-content: center;
@@ -31,9 +31,7 @@ body {
 
 .inputTable{
     width: 90%;
-    height: 330px;
-    margin: 5% 5%;
-    border-radius: 20px;
+    margin: 5% auto 2% auto;
     display: flex;
     box-sizing: border-box;
 }
@@ -79,17 +77,30 @@ select {
 }
 
 input[type="submit"],input[type="button"] {
+    padding: 1%;
     width: 30%;
-    min-height: 30px;
-    max-height: 50px;
+    height: 50px;
     white-space: normal;
+    border-radius: 5px;
+    border: 1px;
 }
 .btn{
     color: white;
-    background-color: green;
+    background-color: rgb(40, 173, 95);
+    border: 1px solid rgb(19, 154, 75);
+}
+.btn:hover{
+    color: white;
+    background-color: rgb(19, 154, 75);
+    cursor: pointer;
 }
 #clear {
-    background-color: red;
+    border: 1px solid rgb(214, 18, 18);
+    background-color: rgb(243, 58, 58);
+    cursor: pointer;
+}
+#clear:hover {
+    background-color: rgb(214, 18, 18);
 }
 #error {
     width: 90%;
