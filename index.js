@@ -1,17 +1,14 @@
 // Imports
 const express = require('express');
-const app = express();
 const path = require('path');
-const router = express.Router();
+const product = require('./api/product');
 
-router.get('/', function (req, res) {
-    res.sendFile(path.join(__dirname + '/index.html'))
-});
+const app = express();
 
-const port = 8080;
+const port = process.env.PORT || 3000;
 
+app.use('/api/product', product);
 app.use('/public', express.static(__dirname + '/public'));
-app.use('/', router)
 
 app.listen(port, () => {
     console.log('Listening on port ' + port)

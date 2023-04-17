@@ -67,6 +67,7 @@ function clearAll(){
     document.getElementById("exponent").value="";
     binNum.innerHTML="";
     hexNum.innerHTML="";
+    document.getElementById("error").style.display = "none";
 }
 
 function clearOutput(){
