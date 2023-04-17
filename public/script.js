@@ -389,14 +389,14 @@ function error_check() {
         return false;
     }
 
-    if(input == "qNaN")
+    if(input == "sNaN")
     {
         binNum.innerHTML = "0 11111111 010 0000 0000 0000 0000 0000"
         hexNum.innerHTML = "7FA00000"
         return false;
     }
 
-    if(input == "sNaN")
+    if(input == "qNaN")
     {
         binNum.innerHTML = "0 11111111 100 0000 0000 0000 0000 0000"
         hexNum.innerHTML = "7FC00000"
