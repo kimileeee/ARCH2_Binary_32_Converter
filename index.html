@@ -11,49 +11,55 @@
 
 </head>
 <body>
-    <h1>IEEE-754 Binary-32 Floating Point Converter</h1>
-    <p>Converter to binary-32 floating point into binary and hexadecimal number equivalent.</p>
-    <p>Enter the 32-bit binary or decimal representation of a floating-point number here, then click= Convert</p>
-    <form method="GET" id="my_form"></form>
-        <div class = "inputTable">
-            
-                <div class = "container" style="margin-right: 50px;">
-                    <h2>Input</h2>
-                        <p class="inputTitle">Number</p>
-                        <input type="text" id="num" name="num" form="my_form" placeholder="Binary or Decimal or sNaN or qNaN"/>
-                    
-                        <p class="inputTitle">Base</p>
-                        <select name="base" id="base" form="my_form">
-                            <option value="default">Select</option>
-                            <option value="2">2</option>
-                            <option value="10">10</option>
-                        </select>
-                        
-                        <p class="inputTitle">Exponent</p>
-                        <input type="number" id="exponent" name="exponent" form="my_form" placeholder="Exponent"/>
-                </div>
-            
-
-                <div class = "container">
-                    <h2>Output</h2>
-                        <p class="inputTitle">Binary Number</p>
-                        <textarea readonly id="binNum"></textarea>
-
-                        <p class="inputTitle">Hexadecimal Number</p>
-                        <textarea readonly id="hexNum"></textarea>
-
-                        <div class="actions">
-                            <input type='button' id='clear' onclick = "clearAll()" class = "btn" value='Clear'/>
-                            <input type='submit' id='convert-btn'  class = "btn"  onclick = "convert()" value='Convert' />
-                            <input type='button' id='txt-file-btn'  class = "btn" onclick = "saveToFile()" value='Text File Output' style="width: 150px;" />
-                        </div>
-                </div>
-
+    <div class="container-fluid">
+        <div class="header">
+            <h1>IEEE-754 Binary-32 Floating Point Converter</h1>
+            <p>Converter to binary-32 floating point into binary and hexadecimal number equivalent.</p>
+            <p>Enter the 32-bit binary or decimal representation of a floating-point number here, then click= Convert</p>
         </div>
         
-    </form>
-    <div id = "error">
-        <p id = "error_msg"></p>
+        <form method="GET" id="my_form"></form>
+            <div class = "inputTable">
+                
+                    <div class = "container">
+                        <h2>Input</h2>
+                            <p class="inputTitle">Number</p>
+                            <input type="text" id="num" name="num" form="my_form" placeholder="Binary or Decimal or sNaN or qNaN"/>
+                        
+                            <p class="inputTitle">Base</p>
+                            <select name="base" id="base" form="my_form">
+                                <option value="default">Select</option>
+                                <option value="2">2</option>
+                                <option value="10">10</option>
+                            </select>
+                            
+                            <p class="inputTitle">Exponent</p>
+                            <input type="number" id="exponent" name="exponent" form="my_form" placeholder="Exponent"/>
+                    </div>
+                
+
+                    <div class = "container">
+                        <h2>Output</h2>
+                            <p class="inputTitle">Binary Number</p>
+                            <textarea readonly id="binNum"></textarea>
+
+                            <p class="inputTitle">Hexadecimal Number</p>
+                            <textarea readonly id="hexNum"></textarea>
+
+                            <div class="actions">
+                                <input type='button' id='clear' onclick = "clearAll()" class = "btn" value='Clear'/>
+                                <input type='submit' id='convert-btn'  class = "btn"  onclick = "convert()" value='Convert' />
+                                <input type='button' id='txt-file-btn'  class = "btn" onclick = "saveToFile()" value='Text File Output' />
+                            </div>
+                    </div>
+
+            </div>
+            
+        </form>
+        <div id = "error">
+            <p id = "error_msg"></p>
+        </div>
     </div>
+    
 </body>
 </html>
