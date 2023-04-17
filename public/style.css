@@ -85,12 +85,12 @@ input[type="submit"],input[type="button"] {
     border: 1px;
 }
 .btn{
-    color: white;
+    color: #f7f5f0;
     background-color: rgb(40, 173, 95);
     border: 1px solid rgb(19, 154, 75);
 }
 .btn:hover{
-    color: white;
+    color: #f7f5f0;
     background-color: rgb(19, 154, 75);
     cursor: pointer;
 }
